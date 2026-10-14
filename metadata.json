@@ -1,0 +1,6 @@
+{
+  "name": "Igreja Geração Eleita — IGEAD-MT",
+  "description": "Aplicativo oficial da Igreja Geração Eleita (IGEAD-MT) em Cuiabá - MT. Cultos ao vivo, Bíblia Digital completa, departamentos oficiais, escalas da mídia e gestão eclesiástica.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
