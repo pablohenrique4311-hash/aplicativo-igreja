@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useChurch } from '../../context/ChurchContext';
+import { useChurch, APP_THEMES } from '../../context/ChurchContext';
 import { QrCodeSvg } from '../common/QrCodeSvg';
 import { UserAvatar } from '../common/UserAvatar';
 import { getDisplayRole, validateImageFile } from '../../services/permissionSecurityService';
@@ -22,7 +22,8 @@ import {
   Upload,
   X,
   Check,
-  AlertCircle
+  AlertCircle,
+  Palette
 } from 'lucide-react';
 
 export const ProfileView: React.FC = () => {
@@ -37,7 +38,9 @@ export const ProfileView: React.FC = () => {
     departmentMemberships,
     endDepartmentMembership,
     updateUserAvatar,
-    removeUserAvatar
+    removeUserAvatar,
+    appTheme,
+    setAppTheme
   } = useChurch();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -657,6 +660,45 @@ export const ProfileView: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Aparência */}
+      <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4">
+        <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <Palette className="w-4 h-4 text-amber-400" />
+          Aparência do Aplicativo
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label="Tema do aplicativo">
+          {APP_THEMES.map((theme) => {
+            const selected = appTheme === theme.id;
+            return (
+              <button
+                key={theme.id}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                onClick={() => setAppTheme(theme.id)}
+                className={`p-3 rounded-2xl border text-left flex items-center gap-3 transition-colors ${
+                  selected
+                    ? 'border-amber-400 bg-slate-800'
+                    : 'border-slate-800 bg-slate-950 hover:border-slate-700'
+                }`}
+              >
+                <span
+                  className="w-10 h-10 shrink-0 rounded-xl border border-white/10 flex items-end justify-end p-1"
+                  style={{ background: `linear-gradient(135deg, ${theme.swatches[0]} 50%, ${theme.swatches[1]} 50%)` }}
+                >
+                  <span className="w-3.5 h-3.5 rounded-full" style={{ background: theme.swatches[2] }} />
+                </span>
+                <span className="flex-1 min-w-0">
+                  <span className="block text-sm font-bold text-white">{theme.name}</span>
+                  <span className="block text-xs text-slate-400">{theme.description}</span>
+                </span>
+                {selected && <Check className="w-4 h-4 text-amber-400 shrink-0" />}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {/* 6. LGPD & Privacidade */}
       <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-3 text-xs text-slate-400">

@@ -60,6 +60,14 @@ export type AppTab =
   | 'perfil'
   | 'admin';
 
+export type AppTheme = 'padrao' | 'oceano' | 'purpura';
+
+export const APP_THEMES: { id: AppTheme; name: string; description: string; swatches: [string, string, string] }[] = [
+  { id: 'padrao', name: 'Padrão', description: 'Grafite e dourado', swatches: ['#020618', '#1d293d', '#ffb900'] },
+  { id: 'oceano', name: 'Oceano', description: 'Azul-marinho e turquesa', swatches: ['#000a1e', '#062e49', '#33d8ed'] },
+  { id: 'purpura', name: 'Púrpura', description: 'Ameixa e rosa-orquídea', swatches: ['#0d0517', '#312242', '#f59dd4'] }
+];
+
 interface BibleNavigationTarget {
   bookId: string;
   chapter: number;
@@ -121,6 +129,8 @@ interface ChurchContextType {
   setActiveTab: (tab: AppTab) => void;
   isPhonePreview: boolean;
   setIsPhonePreview: (val: boolean) => void;
+  appTheme: AppTheme;
+  setAppTheme: (theme: AppTheme) => void;
 
   // Church Settings & Identity
   churchSettings: ChurchSettings;
@@ -274,6 +284,11 @@ export const ChurchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [activeTab, setActiveTab] = useState<AppTab>('departamentos');
   const [isPhonePreview, setIsPhonePreview] = useState<boolean>(false);
 
+  const [appTheme, setAppTheme] = useState<AppTheme>(() => {
+    const saved = localStorage.getItem('igead_app_theme');
+    return APP_THEMES.some((t) => t.id === saved) ? (saved as AppTheme) : 'padrao';
+  });
+
   const [liveStream, setLiveStream] = useState<LiveStreamData>(() => {
     const saved = localStorage.getItem('igead_live');
     return saved ? JSON.parse(saved) : INITIAL_LIVE_STREAM;
@@ -414,6 +429,13 @@ export const ChurchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   useEffect(() => {
     localStorage.setItem('igead_audit_logs_v2', JSON.stringify(auditLogs));
   }, [auditLogs]);
+
+  useEffect(() => {
+    localStorage.setItem('igead_app_theme', appTheme);
+    document.documentElement.dataset.theme = appTheme;
+    const themeColor = APP_THEMES.find((t) => t.id === appTheme)?.swatches[0];
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor ?? '#0f172a');
+  }, [appTheme]);
 
   // Initial sync with backend settings for logo and identity
   useEffect(() => {
@@ -1403,6 +1425,8 @@ export const ChurchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         setActiveTab,
         isPhonePreview,
         setIsPhonePreview,
+        appTheme,
+        setAppTheme,
         churchSettings,
         updateChurchSettings,
         updateChurchLogo,

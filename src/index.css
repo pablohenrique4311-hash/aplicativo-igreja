@@ -8,14 +8,71 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #0b0f19;
-    color: #f1f5f9;
+    background-color: var(--color-slate-950);
+    color: var(--color-slate-100);
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
+}
+
+/*
+ * Temas do app. A interface usa `slate` como base neutra e `amber` como destaque,
+ * então cada tema redefine essas duas escalas do Tailwind (o tema "padrão" usa as originais).
+ * O tema ativo é aplicado em <html data-theme="..."> pelo ChurchContext.
+ */
+[data-theme='oceano'] {
+  --color-slate-50: oklch(98.2% 0.006 235);
+  --color-slate-100: oklch(96.4% 0.012 235);
+  --color-slate-200: oklch(92.4% 0.022 235);
+  --color-slate-300: oklch(86.4% 0.035 235);
+  --color-slate-400: oklch(71% 0.055 235);
+  --color-slate-500: oklch(56% 0.065 238);
+  --color-slate-600: oklch(45.5% 0.065 240);
+  --color-slate-700: oklch(38% 0.068 242);
+  --color-slate-800: oklch(29% 0.065 244);
+  --color-slate-900: oklch(22% 0.06 246);
+  --color-slate-950: oklch(14.5% 0.05 248);
+
+  --color-amber-50: oklch(98.2% 0.02 205);
+  --color-amber-100: oklch(95.5% 0.045 205);
+  --color-amber-200: oklch(91.5% 0.08 205);
+  --color-amber-300: oklch(87% 0.11 205);
+  --color-amber-400: oklch(81% 0.13 208);
+  --color-amber-500: oklch(73% 0.135 212);
+  --color-amber-600: oklch(62% 0.125 216);
+  --color-amber-700: oklch(52% 0.105 220);
+  --color-amber-800: oklch(44% 0.085 222);
+  --color-amber-900: oklch(38% 0.07 224);
+  --color-amber-950: oklch(27% 0.05 226);
+}
+
+[data-theme='purpura'] {
+  --color-slate-50: oklch(98.2% 0.006 305);
+  --color-slate-100: oklch(96.4% 0.012 305);
+  --color-slate-200: oklch(92.4% 0.022 305);
+  --color-slate-300: oklch(86.4% 0.035 305);
+  --color-slate-400: oklch(71% 0.05 305);
+  --color-slate-500: oklch(56% 0.06 305);
+  --color-slate-600: oklch(45.5% 0.06 305);
+  --color-slate-700: oklch(37.5% 0.062 305);
+  --color-slate-800: oklch(28.5% 0.06 305);
+  --color-slate-900: oklch(21.5% 0.052 305);
+  --color-slate-950: oklch(14% 0.042 305);
+
+  --color-amber-50: oklch(98.2% 0.015 340);
+  --color-amber-100: oklch(95.5% 0.035 340);
+  --color-amber-200: oklch(91.5% 0.065 340);
+  --color-amber-300: oklch(86.5% 0.095 340);
+  --color-amber-400: oklch(80% 0.125 342);
+  --color-amber-500: oklch(72% 0.15 345);
+  --color-amber-600: oklch(62% 0.16 348);
+  --color-amber-700: oklch(52% 0.145 350);
+  --color-amber-800: oklch(44% 0.12 352);
+  --color-amber-900: oklch(38% 0.1 354);
+  --color-amber-950: oklch(27% 0.07 356);
 }
 
 /* Custom scrollbars and utility styles */
@@ -29,7 +86,7 @@
 
 /* Glassmorphism surfaces */
 .glass-panel {
-  background: rgba(17, 24, 39, 0.75);
+  background: color-mix(in oklab, var(--color-slate-900) 75%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);

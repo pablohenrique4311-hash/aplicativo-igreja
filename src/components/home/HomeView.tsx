@@ -431,7 +431,7 @@ export const HomeView: React.FC = () => {
             /* Official Waiting State (No simulated fake transmission, clean respectful church waiting room) */
             <div className="w-full h-full flex flex-col items-center justify-center p-6 sm:p-10 text-center bg-gradient-to-b from-slate-900/90 via-slate-950 to-slate-950 relative overflow-hidden">
               {/* Subtle background decorative cross/glow */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.06)_0,transparent_70%)] pointer-events-none" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,color-mix(in_oklab,var(--color-amber-400)_6%,transparent)_0,transparent_70%)] pointer-events-none" />
 
               <div className="relative z-10 max-w-xl mx-auto space-y-4">
                 {/* Waiting Status Badge */}
