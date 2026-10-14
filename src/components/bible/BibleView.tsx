@@ -59,7 +59,8 @@ export const BibleView: React.FC = () => {
     bibleRecentHistory,
     addBibleHistory,
     churchSettings,
-    liveStream
+    liveStream,
+    appTheme
   } = useChurch();
 
   // Translation Selection
@@ -109,7 +110,9 @@ export const BibleView: React.FC = () => {
 
   // Reader Settings
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg' | 'xl'>('md');
-  const [readerTheme, setReaderTheme] = useState<'dark' | 'light' | 'sepia'>('dark');
+  const [readerTheme, setReaderTheme] = useState<'dark' | 'light' | 'sepia'>(
+    appTheme === 'claro' ? 'light' : 'dark'
+  );
 
   // Sub-tabs: 'leitura' | 'favoritos' | 'anotacoes' | 'historico'
   const [activeSubTab, setActiveSubTab] = useState<
@@ -382,13 +385,14 @@ export const BibleView: React.FC = () => {
   // Theme styling for reading paper
   const getThemeClasses = () => {
     switch (readerTheme) {
+      // Cores fixas: o papel de leitura tem tema próprio, independente do tema do app
       case 'light':
-        return 'bg-amber-50/90 text-slate-900 border-amber-200/80 shadow-md';
+        return 'bg-[#fffbeb] text-[#0f172b] border-[#fee685] shadow-md';
       case 'sepia':
         return 'bg-[#fbf0d9] text-[#433422] border-[#e8d5b5] shadow-md';
       case 'dark':
       default:
-        return 'bg-slate-900 text-slate-100 border-slate-800 shadow-2xl';
+        return 'bg-[#0f172b] text-[#f1f5f9] border-[#1d293d] shadow-2xl';
     }
   };
 
@@ -762,7 +766,7 @@ export const BibleView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setFontSize('sm')}
-                  className={`px-2 py-0.5 rounded text-xs font-bold ${
+                  className={`min-w-8 h-8 px-2 rounded-lg text-xs font-bold ${
                     fontSize === 'sm' ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-white'
                   }`}
                   title="Fonte Pequena"
@@ -772,7 +776,7 @@ export const BibleView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setFontSize('md')}
-                  className={`px-2 py-0.5 rounded text-xs font-bold ${
+                  className={`min-w-8 h-8 px-2 rounded-lg text-xs font-bold ${
                     fontSize === 'md' ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-white'
                   }`}
                   title="Fonte Média"
@@ -782,7 +786,7 @@ export const BibleView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setFontSize('lg')}
-                  className={`px-2 py-0.5 rounded text-xs font-bold ${
+                  className={`min-w-8 h-8 px-2 rounded-lg text-xs font-bold ${
                     fontSize === 'lg' ? 'bg-amber-400 text-slate-950' : 'text-slate-400 hover:text-white'
                   }`}
                   title="Fonte Grande"
@@ -796,18 +800,18 @@ export const BibleView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setReaderTheme('dark')}
-                  className={`p-1.5 rounded-lg text-xs ${
+                  className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs ${
                     readerTheme === 'dark' ? 'bg-slate-800 text-amber-400' : 'text-slate-400'
                   }`}
-                  title="Modo Escuro (Padrão)"
+                  title="Modo Escuro"
                 >
                   <Moon className="w-3.5 h-3.5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => setReaderTheme('light')}
-                  className={`p-1.5 rounded-lg text-xs ${
-                    readerTheme === 'light' ? 'bg-white text-slate-950 font-bold' : 'text-slate-400'
+                  className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs ${
+                    readerTheme === 'light' ? 'bg-[#fffbeb] text-[#0f172b] ring-1 ring-amber-400 font-bold' : 'text-slate-400'
                   }`}
                   title="Modo Claro"
                 >
@@ -816,8 +820,8 @@ export const BibleView: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setReaderTheme('sepia')}
-                  className={`p-1.5 rounded-lg text-xs font-bold ${
-                    readerTheme === 'sepia' ? 'bg-[#fbf0d9] text-[#433422]' : 'text-slate-400'
+                  className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs font-bold ${
+                    readerTheme === 'sepia' ? 'bg-[#fbf0d9] text-[#433422] ring-1 ring-amber-400' : 'text-slate-400'
                   }`}
                   title="Modo Sépia (Papel Bíblico)"
                 >
@@ -855,7 +859,7 @@ export const BibleView: React.FC = () => {
           )}
 
           {/* Scripture Reading Canvas */}
-          <div className={`p-6 sm:p-10 rounded-3xl border transition-colors ${getThemeClasses()}`}>
+          <div className={`p-4 sm:p-10 rounded-3xl border transition-colors ${getThemeClasses()}`}>
             {/* Header: Book Title & Chapter Navigation */}
             <div className="flex items-center justify-between pb-6 mb-6 border-b border-current/10">
               <button
@@ -981,7 +985,7 @@ export const BibleView: React.FC = () => {
                       const el = document.getElementById(`verse-${v.number}`);
                       el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }}
-                    className={`w-7 h-7 rounded-lg shrink-0 text-xs font-semibold flex items-center justify-center transition-all ${
+                    className={`w-8 h-8 rounded-lg shrink-0 text-xs font-semibold flex items-center justify-center transition-all ${
                       highlightedVerse === v.number
                         ? 'bg-amber-400 text-slate-950 font-bold shadow-md scale-105'
                         : 'bg-black/10 hover:bg-black/20 text-current border border-current/10'
@@ -1026,11 +1030,11 @@ export const BibleView: React.FC = () => {
                         <sup className="text-xs font-sans font-bold text-amber-500 pt-1 select-none shrink-0">
                           {verse.number}
                         </sup>
-                        <div className="flex-1">
+                        <div className="flex-1 min-w-0">
                           <span className="leading-relaxed">{verse.text}</span>
 
                           {/* Inline Actions Toolbar */}
-                          <div className="mt-2 flex items-center gap-2 pt-2 border-t border-current/10 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity text-xs font-sans">
+                          <div className="mt-2 flex flex-wrap items-center gap-1 sm:gap-2 pt-2 border-t border-current/10 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity text-xs font-sans">
                             {/* Favorite toggle */}
                             <button
                               type="button"
@@ -1043,7 +1047,7 @@ export const BibleView: React.FC = () => {
                                   verse.text
                                 )
                               }
-                              className={`p-1.5 rounded-lg transition-colors flex items-center gap-1 ${
+                              className={`min-h-8 px-2 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${
                                 isFavorite
                                   ? 'text-rose-500 font-bold'
                                   : 'hover:bg-current/10 opacity-70 hover:opacity-100'
@@ -1051,7 +1055,7 @@ export const BibleView: React.FC = () => {
                               title={isFavorite ? 'Remover dos Favoritos' : 'Favoritar Versículo'}
                             >
                               <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-current' : ''}`} />
-                              <span className="text-[10px]">{isFavorite ? 'Salvo' : 'Favoritar'}</span>
+                              <span className="text-[11px]">{isFavorite ? 'Salvo' : 'Favoritar'}</span>
                             </button>
 
                             {/* Add / View Note */}
@@ -1066,7 +1070,7 @@ export const BibleView: React.FC = () => {
                                   text: verse.text
                                 })
                               }
-                              className={`p-1.5 rounded-lg transition-colors flex items-center gap-1 ${
+                              className={`min-h-8 px-2 py-1.5 rounded-lg transition-colors flex items-center gap-1 ${
                                 hasNote
                                   ? 'text-amber-400 font-bold'
                                   : 'hover:bg-current/10 opacity-70 hover:opacity-100'
@@ -1074,25 +1078,25 @@ export const BibleView: React.FC = () => {
                               title="Adicionar anotação bíblica pessoal"
                             >
                               <Edit3 className="w-3.5 h-3.5" />
-                              <span className="text-[10px]">{hasNote ? 'Ver Anotação' : 'Anotar'}</span>
+                              <span className="text-[11px]">{hasNote ? 'Ver Anotação' : 'Anotar'}</span>
                             </button>
 
                             {/* Copy Verse */}
                             <button
                               type="button"
                               onClick={() => handleCopyVerse(verse.number, verse.text)}
-                              className="p-1.5 rounded-lg hover:bg-current/10 transition-colors flex items-center gap-1 opacity-70 hover:opacity-100"
+                              className="min-h-8 px-2 py-1.5 rounded-lg hover:bg-current/10 transition-colors flex items-center gap-1 opacity-70 hover:opacity-100"
                               title="Copiar texto e referência"
                             >
                               {copiedVerseNum === verse.number ? (
                                 <>
                                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                                  <span className="text-[10px] text-emerald-400">Copiado</span>
+                                  <span className="text-[11px] text-emerald-400">Copiado</span>
                                 </>
                               ) : (
                                 <>
                                   <Copy className="w-3.5 h-3.5" />
-                                  <span className="text-[10px]">Copiar</span>
+                                  <span className="text-[11px]">Copiar</span>
                                 </>
                               )}
                             </button>
@@ -1101,11 +1105,11 @@ export const BibleView: React.FC = () => {
                             <button
                               type="button"
                               onClick={() => handleShareWhatsApp(verse.number, verse.text)}
-                              className="p-1.5 rounded-lg hover:bg-emerald-500/20 text-emerald-400 transition-colors flex items-center gap-1 ml-auto"
+                              className="min-h-8 px-2 py-1.5 rounded-lg hover:bg-emerald-500/20 text-emerald-400 transition-colors flex items-center gap-1 ml-auto"
                               title="Compartilhar no WhatsApp"
                             >
                               <Share2 className="w-3.5 h-3.5" />
-                              <span className="text-[10px]">WhatsApp</span>
+                              <span className="text-[11px]">WhatsApp</span>
                             </button>
                           </div>
                         </div>

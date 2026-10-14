@@ -11,7 +11,7 @@ Aplicativo da Igreja Geração Eleita (IGEAD-MT), em Cuiabá - MT. Reúne cultos
 - **Departamentos** — Homens, Mulheres, Jovens, Crianças e Mídia, cada um com integrantes, chat interno e escalas.
 - **Agenda** — eventos da igreja com compartilhamento via WhatsApp.
 - **Contribuir** — dízimos e ofertas por Pix, cartão ou boleto (simulados, sem integração de pagamento).
-- **Perfil** — dados do usuário, foto, vínculos com departamentos e pedidos de oração.
+- **Perfil** — dados do usuário, foto, vínculos com departamentos, pedidos de oração e escolha do tema (Claro, Escuro, Oceano ou Púrpura).
 - **Administração** — gestão de cargos, departamentos, identidade visual da igreja e log de auditoria.
 
 ### Perfis e permissões

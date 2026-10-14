@@ -60,10 +60,11 @@ export type AppTab =
   | 'perfil'
   | 'admin';
 
-export type AppTheme = 'padrao' | 'oceano' | 'purpura';
+export type AppTheme = 'escuro' | 'oceano' | 'purpura' | 'claro';
 
 export const APP_THEMES: { id: AppTheme; name: string; description: string; swatches: [string, string, string] }[] = [
-  { id: 'padrao', name: 'Padrão', description: 'Grafite e dourado', swatches: ['#020618', '#1d293d', '#ffb900'] },
+  { id: 'claro', name: 'Claro', description: 'Fundo claro e bronze', swatches: ['#f3f5f9', '#ccd1db', '#a95a00'] },
+  { id: 'escuro', name: 'Escuro', description: 'Grafite e dourado', swatches: ['#020618', '#1d293d', '#ffb900'] },
   { id: 'oceano', name: 'Oceano', description: 'Azul-marinho e turquesa', swatches: ['#000a1e', '#062e49', '#33d8ed'] },
   { id: 'purpura', name: 'Púrpura', description: 'Ameixa e rosa-orquídea', swatches: ['#0d0517', '#312242', '#f59dd4'] }
 ];
@@ -286,7 +287,7 @@ export const ChurchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const [appTheme, setAppTheme] = useState<AppTheme>(() => {
     const saved = localStorage.getItem('igead_app_theme');
-    return APP_THEMES.some((t) => t.id === saved) ? (saved as AppTheme) : 'padrao';
+    return APP_THEMES.some((t) => t.id === saved) ? (saved as AppTheme) : 'claro';
   });
 
   const [liveStream, setLiveStream] = useState<LiveStreamData>(() => {

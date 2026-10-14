@@ -20,7 +20,7 @@
 
 /*
  * Temas do app. A interface usa `slate` como base neutra e `amber` como destaque,
- * então cada tema redefine essas duas escalas do Tailwind (o tema "padrão" usa as originais).
+ * então cada tema redefine essas duas escalas do Tailwind (o tema "escuro" usa as originais).
  * O tema ativo é aplicado em <html data-theme="..."> pelo ChurchContext.
  */
 [data-theme='oceano'] {
@@ -73,6 +73,66 @@
   --color-amber-800: oklch(44% 0.12 352);
   --color-amber-900: oklch(38% 0.1 354);
   --color-amber-950: oklch(27% 0.07 356);
+}
+
+/*
+ * Tema claro: inverte a escala slate (950 vira o fundo claro, 50 o texto mais escuro)
+ * e escurece os tons de destaque usados como texto, para manter o contraste em fundo claro.
+ */
+[data-theme='claro'] {
+  color-scheme: light;
+
+  --color-slate-50: oklch(17% 0.03 265);
+  --color-slate-100: oklch(22% 0.035 265);
+  --color-slate-200: oklch(30% 0.035 265);
+  --color-slate-300: oklch(38% 0.035 265);
+  --color-slate-400: oklch(49% 0.03 265);
+  --color-slate-500: oklch(58% 0.025 265);
+  --color-slate-600: oklch(74% 0.02 265);
+  --color-slate-700: oklch(86% 0.015 265);
+  --color-slate-800: oklch(93% 0.01 265);
+  --color-slate-900: oklch(100% 0 0);
+  --color-slate-950: oklch(97% 0.006 265);
+
+  --color-amber-50: oklch(30% 0.07 50);
+  --color-amber-100: oklch(36% 0.09 52);
+  --color-amber-200: oklch(42% 0.11 55);
+  --color-amber-300: oklch(48% 0.13 58);
+  --color-amber-400: oklch(55% 0.14 62);
+  --color-amber-500: oklch(62% 0.15 66);
+  --color-amber-600: oklch(70% 0.15 70);
+  --color-amber-950: oklch(96% 0.04 85);
+
+  --color-red-200: oklch(44% 0.17 25);
+  --color-red-300: oklch(49% 0.19 25);
+  --color-red-400: oklch(54% 0.21 25);
+  --color-red-950: oklch(95% 0.03 20);
+  --color-emerald-400: oklch(53% 0.13 162);
+  --color-blue-200: oklch(44% 0.15 260);
+  --color-blue-300: oklch(48% 0.17 260);
+  --color-blue-400: oklch(52% 0.19 260);
+  --color-rose-400: oklch(55% 0.2 15);
+  --color-indigo-400: oklch(50% 0.18 275);
+}
+
+/*
+ * `text-white` é o texto principal nos temas escuros; no claro ele passa a ser escuro.
+ * Fundos brancos e botões vermelhos/azuis sólidos mantêm o branco de verdade.
+ */
+[data-theme='claro'] :is(.text-white, .hover\:text-white) {
+  --color-white: var(--color-slate-50);
+}
+
+[data-theme='claro']
+  :is(
+    .bg-white,
+    [class~='bg-red-500'],
+    [class~='bg-red-600'],
+    [class~='hover:bg-red-500'],
+    [class~='hover:bg-red-600'],
+    [class~='bg-blue-500']
+  ) {
+  --color-white: #fff;
 }
 
 /* Custom scrollbars and utility styles */

@@ -690,7 +690,7 @@ export const AdminDashboard: React.FC = () => {
                 <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
                   Exibição em Fundo Escuro (Tema Oficial do App):
                 </span>
-                <div className="py-6 flex items-center justify-center min-h-[140px] bg-slate-900/60 rounded-xl border border-slate-800/80 p-4">
+                <div className="py-6 flex items-center justify-center min-h-[140px] bg-[#0f172b] rounded-xl border border-[#1d293d] p-4">
                   <ChurchLogo size="xl" showSlogan={true} showHeartBadge={true} theme="dark" />
                 </div>
               </div>
@@ -700,7 +700,7 @@ export const AdminDashboard: React.FC = () => {
                 <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
                   Verificação de Transparência & Fundo Claro:
                 </span>
-                <div className="py-6 flex items-center justify-center min-h-[140px] bg-slate-100 rounded-xl border border-slate-300 p-4 shadow-inner">
+                <div className="py-6 flex items-center justify-center min-h-[140px] bg-[#f1f5f9] rounded-xl border border-[#cad5e2] p-4 shadow-inner">
                   <ChurchLogo size="xl" showSlogan={true} showHeartBadge={true} theme="light" />
                 </div>
               </div>

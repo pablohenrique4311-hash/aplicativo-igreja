@@ -390,23 +390,29 @@ export const HomeView: React.FC = () => {
         )}
 
         {/* Video Screen / Player Area */}
-        <div className="relative aspect-video w-full bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800">
+        <div
+          className={`relative w-full bg-slate-950 flex items-center justify-center overflow-hidden border-b border-slate-800 ${
+            // O estado de espera tem mais texto do que cabe em 16:9 no celular
+            activeRecordedVideo || (liveStream.isLive && liveStream.youtubeVideoId) ? 'aspect-video' : 'md:aspect-video'
+          }`}
+        >
           {/* Active Recorded Video Mode */}
           {activeRecordedVideo ? (
             <div className="relative w-full h-full flex flex-col">
               <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between bg-slate-950/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-700">
-                <div className="flex items-center gap-2 text-xs">
-                  <Play className="w-3.5 h-3.5 text-amber-400 fill-current" />
-                  <span className="font-bold text-white truncate max-w-xs sm:max-w-md">
+                <div className="flex items-center gap-2 text-xs min-w-0">
+                  <Play className="w-3.5 h-3.5 text-amber-400 fill-current shrink-0" />
+                  <span className="font-bold text-white truncate">
                     {activeRecordedVideo.title}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setActiveRecordedVideo(null)}
-                  className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition-colors"
+                  className="shrink-0 ml-2 px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-semibold transition-colors"
                 >
-                  Voltar ao Estado de Espera
+                  <span className="sm:hidden">Voltar</span>
+                  <span className="hidden sm:inline">Voltar ao Estado de Espera</span>
                 </button>
               </div>
 
@@ -682,10 +688,10 @@ export const HomeView: React.FC = () => {
 
       {/* 3. Últimas Pregações & Transmissões Gravadas (@IGEAD_MT) */}
       <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h3 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-              <Video className="w-4 h-4 text-red-400" />
+              <Video className="w-4 h-4 text-red-400 shrink-0" />
               Últimas Pregações & Transmissões Gravadas
             </h3>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -697,7 +703,7 @@ export const HomeView: React.FC = () => {
             href={churchSettings.youtube}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-red-400 hover:text-red-300 font-semibold flex items-center gap-1"
+            className="shrink-0 text-xs text-red-400 hover:text-red-300 font-semibold flex items-center gap-1"
           >
             <span>Ver todas no YouTube</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -765,13 +771,13 @@ export const HomeView: React.FC = () => {
 
       {/* 4. Atalhos dos 5 Departamentos Oficiais da Igreja */}
       <div>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between gap-3 mb-3">
           <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider">
             Departamentos Oficiais da Igreja
           </h3>
           <button
             onClick={() => setActiveTab('departamentos')}
-            className="text-xs font-semibold text-amber-400 hover:underline flex items-center gap-1"
+            className="shrink-0 text-xs font-semibold text-amber-400 hover:underline flex items-center gap-1"
           >
             Ver Todos
             <ChevronRight className="w-3.5 h-3.5" />

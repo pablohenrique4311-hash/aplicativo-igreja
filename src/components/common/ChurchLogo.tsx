@@ -46,12 +46,13 @@ export const ChurchLogo: React.FC<ChurchLogoProps> = ({
       ? 'text-xs sm:text-sm'
       : 'text-sm sm:text-base';
 
+  // 'auto' acompanha o tema do app; 'dark'/'light' usam cores fixas para fundos específicos
   const textColor =
-    theme === 'light' ? 'text-slate-900' : 'text-white';
+    theme === 'light' ? 'text-[#0f172b]' : theme === 'dark' ? 'text-[#ffffff]' : 'text-white';
   const sloganColor =
-    theme === 'light' ? 'text-slate-800' : 'text-slate-200';
+    theme === 'light' ? 'text-[#1d293d]' : theme === 'dark' ? 'text-[#e2e8f0]' : 'text-slate-200';
   const emblemColor =
-    theme === 'light' ? '#0f172a' : '#ffffff';
+    theme === 'light' ? '#0f172a' : theme === 'dark' ? '#ffffff' : 'currentColor';
 
   const [customLogoError, setCustomLogoError] = React.useState(false);
 
@@ -112,7 +113,7 @@ export const ChurchLogo: React.FC<ChurchLogoProps> = ({
       <ChurchOfficialEmblem
         size={emblemPixelSize}
         color={emblemColor}
-        className="transition-transform hover:scale-105 duration-300 drop-shadow-sm shrink-0"
+        className="text-white transition-transform hover:scale-105 duration-300 drop-shadow-sm shrink-0"
       />
 
       {/* 2. Typographic Lockup */}

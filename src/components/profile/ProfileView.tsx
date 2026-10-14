@@ -667,7 +667,7 @@ export const ProfileView: React.FC = () => {
           <Palette className="w-4 h-4 text-amber-400" />
           Aparência do Aplicativo
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3" role="radiogroup" aria-label="Tema do aplicativo">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" role="radiogroup" aria-label="Tema do aplicativo">
           {APP_THEMES.map((theme) => {
             const selected = appTheme === theme.id;
             return (

@@ -144,7 +144,10 @@ export const Navbar: React.FC = () => {
             <button
               onClick={() => setIsPhonePreview(!isPhonePreview)}
               title={isPhonePreview ? 'Alternar para tela cheia web' : 'Simular visualização de celular (iOS/Android)'}
-              className={`p-2 rounded-xl border transition-colors flex items-center gap-1.5 text-xs font-medium ${
+              className={`p-2 rounded-xl border transition-colors items-center gap-1.5 text-xs font-medium ${
+                // Em telas pequenas o simulador não faz sentido; só aparece para sair dele
+                isPhonePreview ? 'flex' : 'hidden lg:flex'
+              } ${
                 isPhonePreview
                   ? 'bg-amber-400 text-slate-950 border-amber-300 font-bold'
                   : 'bg-slate-900 text-slate-300 border-slate-800 hover:bg-slate-800 hover:text-white'
@@ -202,7 +205,7 @@ export const Navbar: React.FC = () => {
 
               {/* Role Switcher Menu */}
               {roleMenuOpen && (
-                <div className="absolute right-0 mt-2 w-80 p-3 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 animate-fade-in max-h-[85vh] overflow-y-auto">
+                <div className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] p-3 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 animate-fade-in max-h-[85vh] overflow-y-auto">
                   <div className="p-2 border-b border-slate-800 mb-2">
                     <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                       Simular Usuário / Perfil IGEAD-MT:

@@ -6,11 +6,20 @@ import {
   Calendar,
   Users,
   HeartHandshake,
-  User
+  User,
+  ShieldCheck
 } from 'lucide-react';
 
 export const BottomTabBar: React.FC = () => {
-  const { activeTab, setActiveTab } = useChurch();
+  const { activeTab, setActiveTab, currentUser, departmentMemberships } = useChurch();
+
+  // Mesma regra do Navbar: Admin Geral, Líder Pastoral ou Líder de departamento ativo
+  const canAccessAdmin =
+    currentUser.role === 'admin' ||
+    currentUser.role === 'pastor' ||
+    departmentMemberships.some(
+      (m) => m.userId === currentUser.id && m.status === 'ATIVO' && m.role === 'LÍDER'
+    );
 
   const tabs: { id: AppTab; label: string; icon: React.FC<{ className?: string }> }[] = [
     { id: 'inicio', label: 'Início', icon: Home },
@@ -18,7 +27,8 @@ export const BottomTabBar: React.FC = () => {
     { id: 'departamentos', label: 'Deptos', icon: Users },
     { id: 'agenda', label: 'Agenda', icon: Calendar },
     { id: 'contribuir', label: 'Dízimos', icon: HeartHandshake },
-    { id: 'perfil', label: 'Perfil', icon: User }
+    { id: 'perfil', label: 'Perfil', icon: User },
+    ...(canAccessAdmin ? [{ id: 'admin' as AppTab, label: 'Gestão', icon: ShieldCheck }] : [])
   ];
 
   return (
@@ -27,7 +37,7 @@ export const BottomTabBar: React.FC = () => {
       role="navigation"
       aria-label="Navegação Principal"
     >
-      <div className="max-w-md mx-auto grid grid-cols-6 h-16 items-center px-1">
+      <div className={`max-w-md mx-auto grid ${canAccessAdmin ? 'grid-cols-7' : 'grid-cols-6'} h-16 items-center px-1`}>
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -45,7 +55,7 @@ export const BottomTabBar: React.FC = () => {
                   isActive ? 'scale-110 stroke-[2.4]' : 'stroke-[1.8]'
                 }`}
               />
-              <span className="text-[10px] mt-1 tracking-tight truncate max-w-[56px]">
+              <span className="text-[10px] mt-1 tracking-tight truncate max-w-full">
                 {tab.label}
               </span>
               {isActive && (
